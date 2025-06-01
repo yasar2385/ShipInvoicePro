@@ -82,7 +82,7 @@ export default function HomePage() {
               Everything You Need to Manage Your Business
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From shipment tracking to invoice generation, we've got you covered with powerful tools.
+              From shipment tracking to invoice generation, we&lsquo;ve got you covered with powerful tools.
             </p>
           </div>
 

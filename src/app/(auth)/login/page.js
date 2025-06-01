@@ -2,7 +2,7 @@
 // 2. LOGIN PAGE - src/app/(auth)/login/page.js
 // =============================================================================
 
-import { LoginForm } from '@/components/auth/LoginForm'
+import { LoginForm } from '../LoginForm'
 import Link from 'next/link'
 import { Package, ArrowLeft } from 'lucide-react'
 
@@ -51,7 +51,7 @@ export default function LoginPage() {
           {/* Sign Up Link */}
           <div className="text-center">
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don&lsquo;t have an account?{' '}
               <Link 
                 href="/register" 
                 className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
