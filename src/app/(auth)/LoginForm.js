@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Eye, EyeOff, Mail, Lock, Loader2 } from 'lucide-react'
+import { showAlert } from '@/app/components/alert/alert'
+import { loginAdmin } from '../lib/services/loginService'
 
 export function LoginForm() {
   const router = useRouter()
@@ -26,7 +28,7 @@ export function LoginForm() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
@@ -34,54 +36,49 @@ export function LoginForm() {
   }
 
   const validateForm = () => {
+    console.log("validateForm");
     const newErrors = {}
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address'
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
     }
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    
-    if (!validateForm()) return
-    
+
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
     setIsLoading(true)
-    
+
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      // For demo purposes, accept any email/password combination
-      // In real app, this would make an API call to your authentication service
-      
-      // Store auth token (in real app, this would come from the API)
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('authToken', 'demo-token-' + Date.now())
-        localStorage.setItem('user', JSON.stringify({
-          id: '1',
-          email: formData.email,
-          name: formData.email.split('@')[0],
-          role: 'admin'
-        }))
+
+      const user = await loginAdmin(formData.email, formData.password);
+      console.log(user);
+      if (!user.id) {
+        await showAlert('Login Failed', 'User ID not found', 'error');
+        return;
       }
-      
-      // Redirect to dashboard
+
+      localStorage.setItem('authToken', 'demo-token-' + Date.now())
+      localStorage.setItem('user', JSON.stringify(user))
+
       router.push('/dashboard')
-      
+
     } catch (error) {
-      setErrors({ submit: 'Invalid email or password. Please try again.' })
+      setErrors({ submit: error.message })
     } finally {
       setIsLoading(false)
     }
@@ -105,11 +102,10 @@ export function LoginForm() {
             autoComplete="email"
             value={formData.email}
             onChange={handleInputChange}
-            className={`block w-full pl-10 pr-3 py-3 border rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-              errors.email 
-                ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
-                : 'border-gray-300'
-            }`}
+            className={`block w-full pl-10 pr-3 py-3 border rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.email
+              ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
+              : 'border-gray-300'
+              }`}
             placeholder="Enter your email"
           />
         </div>
@@ -134,11 +130,10 @@ export function LoginForm() {
             autoComplete="current-password"
             value={formData.password}
             onChange={handleInputChange}
-            className={`block w-full pl-10 pr-10 py-3 border rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
-              errors.password 
-                ? 'border-red-300 focus:ring-red-500 focus:border-red-500' 
-                : 'border-gray-300'
-            }`}
+            className={`block w-full pl-10 pr-10 py-3 border rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.password
+              ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
+              : 'border-gray-300'
+              }`}
             placeholder="Enter your password"
           />
           <button
@@ -173,8 +168,8 @@ export function LoginForm() {
             Remember me
           </label>
         </div>
-        <Link 
-          href="/forgot-password" 
+        <Link
+          href="/forgot-password"
           className="text-sm text-blue-600 hover:text-blue-700 transition-colors"
         >
           Forgot password?
@@ -192,11 +187,10 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${
-          isLoading 
-            ? 'bg-blue-400 cursor-not-allowed' 
-            : 'bg-blue-600 hover:bg-blue-700 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl'
-        }`}
+        className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${isLoading
+          ? 'bg-blue-400 cursor-not-allowed'
+          : 'bg-blue-600 hover:bg-blue-700 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl'
+          }`}
       >
         {isLoading ? (
           <div className="flex items-center space-x-2">

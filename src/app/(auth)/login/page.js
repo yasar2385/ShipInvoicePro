@@ -6,6 +6,8 @@ import { LoginForm } from '../LoginForm'
 import Link from 'next/link'
 import { Package, ArrowLeft } from 'lucide-react'
 import { Layout } from '@/app/components/common/Layout'
+
+
 export const metadata = {
   title: 'Sign In',
   description: 'Sign in to your ShipInvoice Pro account'

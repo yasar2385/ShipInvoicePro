@@ -102,24 +102,27 @@ export function Header({ variant = 'landing' }) {
   if (variant === 'auth') {
     return (
       <>
-        <div className="p-6">
-          <Link
-            href="/"
-            className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <Package className="h-5 w-5" />
-            <span className="font-medium">ShipInvoice Pro</span>
-          </Link>
+        <div className="flex justify-around items-center p-6 bg-white/80">
+          <span>
+            <Link
+              href="/"
+              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back to Home</span>
+            </Link>
+          </span>
+          <span>
+            <Link
+              href="/"
+              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors ml-6"
+            >
+              <Package className="h-5 w-5" />
+              <span className="font-medium">ShipInvoice Pro</span>
+            </Link>
+          </span>
         </div>
-        <div className="p-6">
-          <Link
-            href="/"
-            className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Home</span>
-          </Link>
-        </div>
+
       </>
     )
   }
