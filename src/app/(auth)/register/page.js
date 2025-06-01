@@ -1,17 +1,20 @@
 // =============================================================================
-// 2. LOGIN PAGE - src/app/(auth)/login/page.js
+// 1. REGISTER PAGE - src/app/(auth)/register/page.js
 // =============================================================================
 
-import { LoginForm } from '../LoginForm'
+import { RegisterForm } from '../RegisterForm'
 import Link from 'next/link'
-import { Package, ArrowLeft } from 'lucide-react'
+import { Package, ArrowLeft, CheckCircle } from 'lucide-react'
 import { Layout } from '@/app/components/common/Layout'
+
 export const metadata = {
-  title: 'Sign In',
-  description: 'Sign in to your ShipInvoice Pro account'
+  title: 'Create Account',
+  description: 'Create your ShipInvoice Pro account and start managing your logistics'
 }
 
-export default function LoginPage() {
+
+
+export default function RegisterPage() {
   return (
     <Layout variant="auth" className="bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col">
@@ -37,27 +40,50 @@ export default function LoginPage() {
                 </div>
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Welcome back
+                Create your account
               </h2>
               <p className="text-gray-600">
-                Sign in to your ShipInvoice Pro account
+                Start managing your logistics with ShipInvoice Pro
               </p>
             </div>
 
-            {/* Login Form */}
-            <div className="bg-white py-8 px-6 shadow-xl rounded-2xl border border-gray-100">
-              <LoginForm />
+            {/* Benefits */}
+            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6">
+              <h3 className="text-lg font-semibold text-blue-900 mb-4">What you ll get:</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-blue-600" />
+                  <span className="text-blue-800">Real-time shipment tracking</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-blue-600" />
+                  <span className="text-blue-800">Professional invoice generation</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-blue-600" />
+                  <span className="text-blue-800">Business analytics & reports</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-blue-600" />
+                  <span className="text-blue-800">Customer management tools</span>
+                </li>
+              </ul>
             </div>
 
-            {/* Sign Up Link */}
+            {/* Register Form */}
+            <div className="bg-white py-8 px-6 shadow-xl rounded-2xl border border-gray-100">
+              <RegisterForm />
+            </div>
+
+            {/* Sign In Link */}
             <div className="text-center">
               <p className="text-gray-600">
-                Don&lsquo;t have an account?{' '}
+                Already have an account?{' '}
                 <Link
-                  href="/register"
+                  href="/login"
                   className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
                 >
-                  Sign up for free
+                  Sign in here
                 </Link>
               </p>
             </div>
@@ -70,6 +96,6 @@ export default function LoginPage() {
       </div> */}
       </div>
     </Layout>
-  )
 
+  )
 }
